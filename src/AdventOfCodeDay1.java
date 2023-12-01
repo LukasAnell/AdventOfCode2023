@@ -28,7 +28,6 @@ public class AdventOfCodeDay1 {
         }
         System.out.println(sum);
     }
-
     public static void findRealFirstLastNums(String str) {
         String number = "";
         for(int i = 0; i < str.length(); i++) {
