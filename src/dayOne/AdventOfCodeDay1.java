@@ -1,3 +1,5 @@
+package dayOne;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,7 +22,7 @@ public class AdventOfCodeDay1 {
         dict.put("eight", 8);
         dict.put("nine", 9);
 
-        Path path = Paths.get("/Users/per2/IdeaProjects/AdventOfCode/src/Day1Input.txt");
+        Path path = Paths.get("src/dayOne/Day1Input.txt");
         try (Stream<String> lines = Files.lines(path)) {
             lines.forEachOrdered(AdventOfCodeDay1::findRealFirstLastNums);
         } catch (IOException e) {
