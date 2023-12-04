@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class AdventOfCodeDay2 {
+public class AoC2 {
     public static int idSum = 0;
     public static int sumofPowers = 0;
     public static ArrayList<int[]> powerList = new ArrayList<>();
@@ -16,7 +16,7 @@ public class AdventOfCodeDay2 {
     public static void main(String[] args) {
         Path path = Paths.get("src/dayTwo/Day2Input.txt");
         try (Stream<String> lines = Files.lines(path)) {
-            lines.forEachOrdered(AdventOfCodeDay2::isGamePossiblePartTwo);
+            lines.forEachOrdered(AoC2::isGamePossiblePartTwo);
         } catch (IOException e) {
             System.out.println("Error happened");
         }

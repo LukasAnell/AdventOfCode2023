@@ -8,7 +8,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.stream.Stream;
 
-public class AdventOfCodeDay1 {
+public class AoC1 {
     public static int sum = 0;
     public static Dictionary<String, Integer> dict = new Hashtable<>();
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class AdventOfCodeDay1 {
 
         Path path = Paths.get("src/dayOne/Day1Input.txt");
         try (Stream<String> lines = Files.lines(path)) {
-            lines.forEachOrdered(AdventOfCodeDay1::findRealFirstLastNums);
+            lines.forEachOrdered(AoC1::findRealFirstLastNums);
         } catch (IOException e) {
             //error happened
         }

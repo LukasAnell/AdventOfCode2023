@@ -1,10 +1,9 @@
 package dayThree;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdventOfCodeDay3 {
+public class AoC3 {
     public static List<String> result = new ArrayList<>();
     public static void main(String[] args) {
         List<String> lineList = Reader.readFromFile();
