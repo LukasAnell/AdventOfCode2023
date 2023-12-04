@@ -1,103 +1,136 @@
 package dayThree;
 
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdventOfCodeDay3 {
-    public static char[][] arr = new char[140][167];
-    public static int i = 0;
-    public static int sum = 0;
+    public static List<String> result = new ArrayList<>();
     public static void main(String[] args) {
-        Path path = Paths.get("src/dayThree/Day3Input.txt");
-        try (Stream<String> lines = Files.lines(path)) {
-            lines.forEachOrdered(AdventOfCodeDay3::createArray);
-        } catch (IOException e) {
-            System.out.println("Error happened");
-            throw new RuntimeException(e);
+        List<String> lineList = Reader.readFromFile();
+        assert lineList != null;
+        char[][] array2D = create2DArray(lineList);
+        partOne(array2D, lineList.get(0).length(), lineList.size());
+        partTwo(array2D, lineList.get(0).length(), lineList.size());
+    }
+
+    public static void partTwo(char[][] arr, int columns, int rows) {
+        int sum = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if(arr[i][j] == '*') {
+                    sum += checkAroundPartTwo(arr, j, i);
+                }
+            }
         }
-        partOne(arr);
+        System.out.println(sum);
+        // 81997870 ANSWER
+    }
+
+    public static int checkAroundPartTwo(char[][] list, int x, int y) {
+        List<Integer> adjacentPartNumbers = new ArrayList<>();
+        int numAdjacent = 0;
+
+        for(int dy = -1; dy <= 1; dy++) {
+            if ((y + dy >= 0) && (y + dy < list.length)) {
+                for(int dx = -1; dx <= 1; dx++) {
+                    if ((x + dx >= 0) && (x + dx < list[y + dy].length) && (!(dy == 0 && dx == 0))) {
+                        if (Character.isDigit(list[y + dy][x + dx]) && numAdjacent < 2) {
+                            int number = getFullNumber(list, x + dx, y + dy);
+                            adjacentPartNumbers.add(number);
+                            numAdjacent++;
+
+                            dx++;
+                            if(dx >= 0 && dx < list[y + dy].length && Character.isDigit(list[y + dy][x + dx])) {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        int product = 1;
+        for (int i : adjacentPartNumbers) {
+            product *= i;
+        }
+
+        if(adjacentPartNumbers.size() == 2) {
+            System.out.println(adjacentPartNumbers);
+            return product;
+        }
+        return 0;
+    }
+
+    public static int getFullNumber(char[][] list, int x, int y) {
+        StringBuilder output = new StringBuilder();
+
+        int tempX = x;
+        while((tempX < 140 && tempX >= 0) && Character.isDigit(list[y][tempX])) {
+            output.append(list[y][tempX]);
+            tempX--;
+        }
+        output.reverse();
+        tempX = x + 1;
+        while((tempX < 140 && tempX >= 0) && Character.isDigit(list[y][tempX])) {
+            output.append(list[y][tempX]);
+            tempX++;
+        }
+
+        if(output.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(String.valueOf(output));
+    }
+
+    public static void partOne(char[][] arr, int columns, int rows) {
+        StringBuilder number = new StringBuilder();
+        boolean isValid = false;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (Character.isDigit(arr[i][j])) {
+                    number.append(arr[i][j]);
+                    if (checkAround(arr, i, j)) {
+                        isValid = true;
+                    }
+                } else {
+                    if (isValid) {
+                        result.add(number.toString());
+                        isValid = false;
+                    }
+                    number = new StringBuilder();
+                }
+            }
+        }
+        int sum = 0;
+        for (String s : result) {
+            sum += Integer.parseInt(s);
+        }
         System.out.println(sum);
     }
 
-    public static void createArray(String str) {
-        char[] arr2 = new char[167];
-        for(int j = 0; j < str.length(); j++) {
-            arr2[j] = str.charAt(j);
-        }
-        arr[i] = arr2;
-        i++;
-    }
-
-    public static int row = 0;
-    public static int column = 0;
-    public static void partOne(char[][] arr) {
-        for(row = 0; row < 140; row++) {
-            for(column = 0; column < 167; column++) {
-                if(Character.isDigit(arr[row][column])) {
-                    checkAround(row, column);
+    public static boolean checkAround(char[][] list, int x, int y) {
+        for(int dx = -1; dx <= 1; dx++) {
+            if ((x + dx >= 0) && (x + dx < list.length)) {
+                for(int dy = -1; dy <= 1; dy++) {
+                    if ((y + dy >= 0) && (y + dy < list[x + dx].length) && (!(dx == 0 && dy == 0))) {
+                        if (Character.toString(list[x + dx][y + dy]).matches("[^a-zA-Z0-9.]")) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
+        return false;
     }
 
-    public static void checkAround(int row, int col) {
-        boolean willWork = false;
-
-        int iMin = Math.max(0, row - 1);
-        int iMax = Math.min(140 - 1, row + 1);
-        int jMin = Math.max(0, col - 1);
-        int jMax = Math.min(167 - 1, col + 1);
-
-        int breakCol = 0;
-
-        for(int i = iMin; i < iMax; i++) {
-            for(int j = jMin; j < jMax; j++) {
-                if(i == row && j == col) {
-                    continue;
-                }
-                if (!(arr[i][j] == '.') && !Character.isDigit(arr[i][j])) {
-                    willWork = true;
-                    breakCol = col;
-                    break;
-                }
+    public static char[][] create2DArray(List<String> list) {
+        char[][] array2D = new char[list.get(0).length()][list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.get(i).length(); j++) {
+                array2D[i][j] = list.get(i).charAt(j);
             }
         }
-        if(willWork) {
-            int[] temp = fullNumber(row, col);
-            int num = temp[0];
-            sum += num;
-            column += temp[1] - breakCol;
-        }
-    }
-
-    public static int[] fullNumber(int row, int col) {
-        String fullNum = "";
-
-        int tempCol = col;
-
-        while (Character.isDigit(arr[row][tempCol])) {
-            fullNum += arr[row][tempCol];
-            tempCol--;
-        }
-
-        fullNum = new StringBuilder(fullNum).reverse().toString();
-
-        tempCol = col + 1;
-        while (Character.isDigit(arr[row][tempCol])) {
-            fullNum += arr[row][tempCol];
-            tempCol++;
-
-        }
-
-        fullNum = fullNum.replaceAll("[^0-9]", "");
-        fullNum = fullNum.replaceAll("\\s+", "");
-
-        System.out.println(fullNum);
-
-        return new int[]{Integer.parseInt(fullNum), tempCol};
+        return array2D;
     }
 }
