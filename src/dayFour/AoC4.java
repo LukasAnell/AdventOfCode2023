@@ -13,11 +13,10 @@ public class AoC4 {
         try (Stream<String> lines = Files.lines(path)) {
             lines.forEachOrdered(AoC4::dayFour);
         } catch (IOException e) {
-            //error happened
+            System.out.println("Error happened");
         }
     }
 
     public static void dayFour(String str) {
-
     }
 }
