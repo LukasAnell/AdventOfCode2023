@@ -46,7 +46,7 @@ public class AoC5 {
     }
 
     public static void findLowestLocation() {
-        int lowestLocation = Integer.MAX_VALUE;
+        int lowestLocation = findHumidityToLocation(findTemperatureToHumidity(findLightToTemperature(findWaterToLight(findFertilizerToWater(findSoilToFertilizer(findSeedToSoilNumber(79)))))));
         for (int seed : seeds) {
             lowestLocation = Math.min(lowestLocation, findHumidityToLocation(findTemperatureToHumidity(findLightToTemperature(findWaterToLight(findFertilizerToWater(findSoilToFertilizer(findSeedToSoilNumber(seed))))))));
         }
