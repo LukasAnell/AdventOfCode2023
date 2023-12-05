@@ -65,8 +65,8 @@ public class AoC5 {
             sourceRangeStart = bigIntegers[1];
             rangeLength = bigIntegers[2].longValue();
 
-            if(humidity.compareTo(destinationRangeStart) >= 0 && ) {
-
+            if(humidity.compareTo(destinationRangeStart) >= 0 && humidity.compareTo(destinationRangeStart.add(BigInteger.valueOf(rangeLength)))) {
+return destinationRangeStart.add(humidity);
             }
 
             for (int j = 0; j < rangeLength; j++) {
