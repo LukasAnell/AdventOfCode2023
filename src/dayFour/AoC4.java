@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 
 public class AoC4 {
     public static List<String> input = new ArrayList<>();
-    public static List<Card> allCards = new ArrayList<>();
     public static List<Integer> cardAmounts = new ArrayList<>();
     public static int numScratchCards = 0;
     public static int sum = 0;

@@ -29,4 +29,5 @@ public class Card {
     public List<Integer> getNumberList() {
         return numberList;
     }
+
 }
