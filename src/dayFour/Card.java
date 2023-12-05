@@ -13,6 +13,11 @@ public class Card {
         numberList = nL;
     }
 
+    public int setCardId(int cId) {
+        cardId = cId;
+        return cardId;
+    }
+
     public int getCardId() {
         return cardId;
     }
