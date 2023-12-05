@@ -7,19 +7,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class AoC5 {
-    public static List<Long> seeds = new ArrayList<>();
-    public static List<BigInteger[]> seedToSoil = new ArrayList<>();
-    public static List<BigInteger[]> soilToFertilizer = new ArrayList<>();
-    public static List<BigInteger[]> fertilizerToWater = new ArrayList<>();
-    public static List<BigInteger[]> waterToLight = new ArrayList<>();
-    public static List<BigInteger[]> lightToTemperature = new ArrayList<>();
-    public static List<BigInteger[]> temperatureToHumidity = new ArrayList<>();
-    public static List<BigInteger[]> humidityToLocation = new ArrayList<>();
+    public static List<Integer> seeds = new ArrayList<>();
+    public static List<int[]> seedToSoil = new ArrayList<>();
+    public static List<int[]> soilToFertilizer = new ArrayList<>();
+    public static List<int[]> fertilizerToWater = new ArrayList<>();
+    public static List<int[]> waterToLight = new ArrayList<>();
+    public static List<int[]> lightToTemperature = new ArrayList<>();
+    public static List<int[]> temperatureToHumidity = new ArrayList<>();
+    public static List<int[]> humidityToLocation = new ArrayList<>();
     public static List<String> input = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -34,38 +35,38 @@ public class AoC5 {
         findLowestLocation();
         // 1132132257 too high
 
-//        System.out.println(seeds);
-//        System.out.println(Arrays.deepToString(seedToSoil.toArray()));
-//        System.out.println(Arrays.deepToString(soilToFertilizer.toArray()));
-//        System.out.println(Arrays.deepToString(fertilizerToWater.toArray()));
-//        System.out.println(Arrays.deepToString(waterToLight.toArray()));
-//        System.out.println(Arrays.deepToString(lightToTemperature.toArray()));
-//        System.out.println(Arrays.deepToString(temperatureToHumidity.toArray()));
-//        System.out.println(Arrays.deepToString(humidityToLocation.toArray()));
+        System.out.println(seeds);
+        System.out.println(Arrays.deepToString(seedToSoil.toArray()));
+        System.out.println(Arrays.deepToString(soilToFertilizer.toArray()));
+        System.out.println(Arrays.deepToString(fertilizerToWater.toArray()));
+        System.out.println(Arrays.deepToString(waterToLight.toArray()));
+        System.out.println(Arrays.deepToString(lightToTemperature.toArray()));
+        System.out.println(Arrays.deepToString(temperatureToHumidity.toArray()));
+        System.out.println(Arrays.deepToString(humidityToLocation.toArray()));
     }
 
     public static void findLowestLocation() {
-        BigInteger lowestLocation = findHumidityToLocation(findTemperatureToHumidity(findLightToTemperature(findWaterToLight(findFertilizerToWater(findSoilToFertilizer(findSeedToSoilNumber(BigInteger.valueOf(1132132257))))))));
-        for (Long seed : seeds) {
-            lowestLocation = lowestLocation.min(findHumidityToLocation(findTemperatureToHumidity(findLightToTemperature(findWaterToLight(findFertilizerToWater(findSoilToFertilizer(findSeedToSoilNumber(BigInteger.valueOf(seed)))))))));
+        int lowestLocation = Integer.MAX_VALUE;
+        for (int seed : seeds) {
+            lowestLocation = Math.min(lowestLocation, findHumidityToLocation(findTemperatureToHumidity(findLightToTemperature(findWaterToLight(findFertilizerToWater(findSoilToFertilizer(findSeedToSoilNumber(seed))))))));
         }
         System.out.println(lowestLocation);
     }
 
-    public static BigInteger findHumidityToLocation(BigInteger humidity) {
-        BigInteger destinationRangeStart = BigInteger.valueOf(0);
-        BigInteger sourceRangeStart = BigInteger.valueOf(0);
-        BigInteger rangeLength = BigInteger.valueOf(0);
+    public static int findHumidityToLocation(int humidity) {
+        int destinationRangeStart = 0;
+        int sourceRangeStart = 0;
+        int rangeLength = 0;
 
-        HashMap<BigInteger, BigInteger> humidityToLocationTable = new HashMap<>();
+        HashMap<Integer, Integer> humidityToLocationTable = new HashMap<>();
 
-        for (BigInteger[] bigIntegers : humidityToLocation) {
-            destinationRangeStart = bigIntegers[0];
-            sourceRangeStart = bigIntegers[1];
-            rangeLength = bigIntegers[2];
+        for (int[] ints : humidityToLocation) {
+            destinationRangeStart = ints[0];
+            sourceRangeStart = ints[1];
+            rangeLength = ints[2];
 
-            for (long j = 0; j < Long.parseLong(String.valueOf(rangeLength)); j++) {
-                humidityToLocationTable.put(sourceRangeStart.add(BigInteger.valueOf(j)), destinationRangeStart.add(BigInteger.valueOf(j)));
+            for (int j = 0; j < rangeLength; j++) {
+                humidityToLocationTable.put(sourceRangeStart + j, destinationRangeStart + j);
             }
         }
         if(humidityToLocationTable.containsKey(humidity)) {
@@ -74,20 +75,20 @@ public class AoC5 {
         return humidity;
     }
 
-    public static BigInteger findTemperatureToHumidity(BigInteger temperature) {
-        BigInteger destinationRangeStart = BigInteger.valueOf(0);
-        BigInteger sourceRangeStart = BigInteger.valueOf(0);
-        BigInteger rangeLength = BigInteger.valueOf(0);
+    public static int findTemperatureToHumidity(int temperature) {
+        int destinationRangeStart = 0;
+        int sourceRangeStart = 0;
+        int rangeLength = 0;
 
-        HashMap<BigInteger, BigInteger> temperatureToHumidityTable = new HashMap<>();
+        HashMap<Integer, Integer> temperatureToHumidityTable = new HashMap<>();
 
-        for (BigInteger[] bigIntegers : temperatureToHumidity) {
-            destinationRangeStart = bigIntegers[0];
-            sourceRangeStart = bigIntegers[1];
-            rangeLength = bigIntegers[2];
+        for (int[] ints : temperatureToHumidity) {
+            destinationRangeStart = ints[0];
+            sourceRangeStart = ints[1];
+            rangeLength = ints[2];
 
-            for (long j = 0; j < Long.parseLong(String.valueOf(rangeLength)); j++) {
-                temperatureToHumidityTable.put(sourceRangeStart.add(BigInteger.valueOf(j)), destinationRangeStart.add(BigInteger.valueOf(j)));
+            for (int j = 0; j < rangeLength; j++) {
+                temperatureToHumidityTable.put(sourceRangeStart + j, destinationRangeStart + j);
             }
         }
         if(temperatureToHumidityTable.containsKey(temperature)) {
@@ -96,20 +97,20 @@ public class AoC5 {
         return temperature;
     }
 
-    public static BigInteger findLightToTemperature(BigInteger light) {
-        BigInteger destinationRangeStart = BigInteger.valueOf(0);
-        BigInteger sourceRangeStart = BigInteger.valueOf(0);
-        BigInteger rangeLength = BigInteger.valueOf(0);
+    public static int findLightToTemperature(int light) {
+        int destinationRangeStart = 0;
+        int sourceRangeStart = 0;
+        int rangeLength = 0;
 
-        HashMap<BigInteger, BigInteger> lightToTemperatureTable = new HashMap<>();
+        HashMap<Integer, Integer> lightToTemperatureTable = new HashMap<>();
 
-        for (BigInteger[] bigIntegers : lightToTemperature) {
-            destinationRangeStart = bigIntegers[0];
-            sourceRangeStart = bigIntegers[1];
-            rangeLength = bigIntegers[2];
+        for (int[] ints : lightToTemperature) {
+            destinationRangeStart = ints[0];
+            sourceRangeStart = ints[1];
+            rangeLength = ints[2];
 
-            for (long j = 0; j < Long.parseLong(String.valueOf(rangeLength)); j++) {
-                lightToTemperatureTable.put(sourceRangeStart.add(BigInteger.valueOf(j)), destinationRangeStart.add(BigInteger.valueOf(j)));
+            for (int j = 0; j < rangeLength; j++) {
+                lightToTemperatureTable.put(sourceRangeStart + j, destinationRangeStart + j);
             }
         }
         if(lightToTemperatureTable.containsKey(light)) {
@@ -118,20 +119,20 @@ public class AoC5 {
         return light;
     }
 
-    public static BigInteger findWaterToLight(BigInteger water) {
-        BigInteger destinationRangeStart = BigInteger.valueOf(0);
-        BigInteger sourceRangeStart = BigInteger.valueOf(0);
-        BigInteger rangeLength = BigInteger.valueOf(0);
+    public static int findWaterToLight(int water) {
+        int destinationRangeStart = 0;
+        int sourceRangeStart = 0;
+        int rangeLength = 0;
 
-        HashMap<BigInteger, BigInteger> waterToLightTable = new HashMap<>();
+        HashMap<Integer, Integer> waterToLightTable = new HashMap<>();
 
-        for (BigInteger[] bigIntegers : waterToLight) {
-            destinationRangeStart = bigIntegers[0];
-            sourceRangeStart = bigIntegers[1];
-            rangeLength = bigIntegers[2];
+        for (int[] ints : waterToLight) {
+            destinationRangeStart = ints[0];
+            sourceRangeStart = ints[1];
+            rangeLength = ints[2];
 
-            for (long j = 0; j < Long.parseLong(String.valueOf(rangeLength)); j++) {
-                waterToLightTable.put(sourceRangeStart.add(BigInteger.valueOf(j)), destinationRangeStart.add(BigInteger.valueOf(j)));
+            for (int j = 0; j < rangeLength; j++) {
+                waterToLightTable.put(sourceRangeStart + j, destinationRangeStart + j);
             }
         }
         if(waterToLightTable.containsKey(water)) {
@@ -140,20 +141,20 @@ public class AoC5 {
         return water;
     }
 
-    public static BigInteger findFertilizerToWater(BigInteger fertilizer) {
-        BigInteger destinationRangeStart = BigInteger.valueOf(0);
-        BigInteger sourceRangeStart = BigInteger.valueOf(0);
-        BigInteger rangeLength = BigInteger.valueOf(0);
+    public static int findFertilizerToWater(int fertilizer) {
+        int destinationRangeStart = 0;
+        int sourceRangeStart = 0;
+        int rangeLength = 0;
 
-        HashMap<BigInteger, BigInteger> fertilizerToWaterTable = new HashMap<>();
+        HashMap<Integer, Integer> fertilizerToWaterTable = new HashMap<>();
 
-        for (BigInteger[] bigIntegers : fertilizerToWater) {
-            destinationRangeStart = bigIntegers[0];
-            sourceRangeStart = bigIntegers[1];
-            rangeLength = bigIntegers[2];
+        for (int[] ints : fertilizerToWater) {
+            destinationRangeStart = ints[0];
+            sourceRangeStart = ints[1];
+            rangeLength = ints[2];
 
-            for (long j = 0; j < Long.parseLong(String.valueOf(rangeLength)); j++) {
-                fertilizerToWaterTable.put(sourceRangeStart.add(BigInteger.valueOf(j)), destinationRangeStart.add(BigInteger.valueOf(j)));
+            for (int j = 0; j < rangeLength; j++) {
+                fertilizerToWaterTable.put(sourceRangeStart + j, destinationRangeStart + j);
             }
         }
         if(fertilizerToWaterTable.containsKey(fertilizer)) {
@@ -162,20 +163,20 @@ public class AoC5 {
         return fertilizer;
     }
 
-    public static BigInteger findSoilToFertilizer(BigInteger soil) {
-        BigInteger destinationRangeStart = BigInteger.valueOf(0);
-        BigInteger sourceRangeStart = BigInteger.valueOf(0);
-        BigInteger rangeLength = BigInteger.valueOf(0);
+    public static int findSoilToFertilizer(int soil) {
+        int destinationRangeStart = 0;
+        int sourceRangeStart = 0;
+        int rangeLength = 0;
 
-        HashMap<BigInteger, BigInteger> soilToFertilizerTable = new HashMap<>();
+        HashMap<Integer, Integer> soilToFertilizerTable = new HashMap<>();
 
-        for (BigInteger[] bigIntegers : soilToFertilizer) {
-            destinationRangeStart = bigIntegers[0];
-            sourceRangeStart = bigIntegers[1];
-            rangeLength = bigIntegers[2];
+        for (int[] ints : soilToFertilizer) {
+            destinationRangeStart = ints[0];
+            sourceRangeStart = ints[1];
+            rangeLength = ints[2];
 
-            for (long j = 0; j < Long.parseLong(String.valueOf(rangeLength)); j++) {
-                soilToFertilizerTable.put(sourceRangeStart.add(BigInteger.valueOf(j)), destinationRangeStart.add(BigInteger.valueOf(j)));
+            for (int j = 0; j < rangeLength; j++) {
+                soilToFertilizerTable.put(sourceRangeStart + j, destinationRangeStart + j);
             }
         }
         if(soilToFertilizerTable.containsKey(soil)) {
@@ -184,20 +185,24 @@ public class AoC5 {
         return soil;
     }
 
-    public static BigInteger findSeedToSoilNumber(BigInteger seed) {
-        BigInteger destinationRangeStart = BigInteger.valueOf(0);
-        BigInteger sourceRangeStart = BigInteger.valueOf(0);
-        BigInteger rangeLength = BigInteger.valueOf(0);
+    public static int findSeedToSoilNumber(int seed) {
+        int destinationRangeStart = 0;
+        int sourceRangeStart = 0;
+        int rangeLength = 0;
 
-        HashMap<BigInteger, BigInteger> seedToSoilTable = new HashMap<>();
+        HashMap<Integer, Integer> seedToSoilTable = new HashMap<>();
 
-        for (BigInteger[] bigIntegers : seedToSoil) {
-            destinationRangeStart = bigIntegers[0];
-            sourceRangeStart = bigIntegers[1];
-            rangeLength = bigIntegers[2];
+        for(int[] ints : seedToSoil) {
+            destinationRangeStart = ints[0];
+            sourceRangeStart = ints[1];
+            rangeLength = ints[2];
 
-            for (long j = 0; j < Long.parseLong(String.valueOf(rangeLength)); j++) {
-                seedToSoilTable.put(sourceRangeStart.add(BigInteger.valueOf(j)), destinationRangeStart.add(BigInteger.valueOf(j)));
+            for(int j = 0; j < rangeLength; j++) {
+                try {
+                    seedToSoilTable.put(sourceRangeStart + j, destinationRangeStart + j);
+                } catch (NumberFormatException ignored) {
+                }
+                seedToSoilTable.put(sourceRangeStart + j, destinationRangeStart + j);
             }
         }
         if(seedToSoilTable.containsKey(seed)) {
@@ -295,13 +300,13 @@ public class AoC5 {
 
     public static void parseHumidityToLocation(String str, int row) {
         String[] humidityToLocationStr = str.split(" ");
-        BigInteger[] humidityToLocationString = new BigInteger[3];
+        int[] humidityToLocationString = new int[3];
         if(!Character.isDigit(humidityToLocationStr[0].charAt(0))) {
             return;
         }
         for(int i = 0; i < humidityToLocationStr.length; i++) {
             try {
-                humidityToLocationString[i] = BigInteger.valueOf(Long.parseLong(humidityToLocationStr[i]));
+                humidityToLocationString[i] = Integer.parseInt(humidityToLocationStr[i]);
             } catch (NumberFormatException ignored) {
             }
         }
@@ -310,13 +315,13 @@ public class AoC5 {
 
     public static void parseTemperatureToHumidity(String str, String row) {
         String[] temperatureToHumidityStr = str.split(" ");
-        BigInteger[] temperatureToHumidityString = new BigInteger[3];
+        int[] temperatureToHumidityString = new int[3];
         if(!Character.isDigit(temperatureToHumidityStr[0].charAt(0))) {
             return;
         }
         for(int i = 0; i < temperatureToHumidityStr.length; i++) {
             try {
-                temperatureToHumidityString[i] = BigInteger.valueOf(Long.parseLong(temperatureToHumidityStr[i]));
+                temperatureToHumidityString[i] = Integer.parseInt(temperatureToHumidityStr[i]);
             } catch (NumberFormatException ignored) {
             }
         }
@@ -325,13 +330,13 @@ public class AoC5 {
 
     public static void parseLightToTemperature(String str, String row) {
         String[] lightToTemperatureStr = str.split(" ");
-        BigInteger[] lightToTemperatureString = new BigInteger[3];
+        int[] lightToTemperatureString = new int[3];
         if(!Character.isDigit(lightToTemperatureStr[0].charAt(0))) {
             return;
         }
         for(int i = 0; i < lightToTemperatureStr.length; i++) {
             try {
-                lightToTemperatureString[i] = BigInteger.valueOf(Long.parseLong(lightToTemperatureStr[i]));
+                lightToTemperatureString[i] = Integer.parseInt(lightToTemperatureStr[i]);
             } catch (NumberFormatException ignored) {
             }
         }
@@ -340,13 +345,13 @@ public class AoC5 {
 
     public static void parseWaterToLight(String str, String row) {
         String[] waterToLightStr = str.split(" ");
-        BigInteger[] waterToLightString = new BigInteger[3];
+        int[] waterToLightString = new int[3];
         if(!Character.isDigit(waterToLightStr[0].charAt(0))) {
             return;
         }
         for(int i = 0; i < waterToLightStr.length; i++) {
             try {
-                waterToLightString[i] = BigInteger.valueOf(Long.parseLong(waterToLightStr[i]));
+                waterToLightString[i] = Integer.parseInt(waterToLightStr[i]);
             } catch (NumberFormatException ignored) {
             }
         }
@@ -355,13 +360,13 @@ public class AoC5 {
 
     public static void parseFertilizerToWater(String str, String row) {
         String[] fertilizerToWaterStr = str.split(" ");
-        BigInteger[] fertilizerToWaterString = new BigInteger[3];
+        int[] fertilizerToWaterString = new int[3];
         if(!Character.isDigit(fertilizerToWaterStr[0].charAt(0))) {
             return;
         }
         for(int i = 0; i < fertilizerToWaterStr.length; i++) {
             try {
-                fertilizerToWaterString[i] = BigInteger.valueOf(Long.parseLong(fertilizerToWaterStr[i]));
+                fertilizerToWaterString[i] = Integer.parseInt(fertilizerToWaterStr[i]);
             } catch (NumberFormatException ignored) {
             }
         }
@@ -370,13 +375,13 @@ public class AoC5 {
 
     public static void parseSoilToFertilizer(String str, String row) {
         String[] soilToFertilizerStr = str.split(" ");
-        BigInteger[] soilToFertilizerString = new BigInteger[3];
+        int[] soilToFertilizerString = new int[3];
         if(!Character.isDigit(soilToFertilizerStr[0].charAt(0))) {
             return;
         }
         for(int i = 0; i < soilToFertilizerStr.length; i++) {
             try {
-                soilToFertilizerString[i] = BigInteger.valueOf(Long.parseLong(soilToFertilizerStr[i]));
+                soilToFertilizerString[i] = Integer.parseInt(soilToFertilizerStr[i]);
             } catch (NumberFormatException ignored) {
             }
         }
@@ -385,13 +390,13 @@ public class AoC5 {
 
     public static void parseSeedsToSoil(String str, String row) {
         String[] seedToSoilStr = str.split(" ");
-        BigInteger[] seedToSoilString = new BigInteger[3];
+        int[] seedToSoilString = new int[3];
         if(!Character.isDigit(seedToSoilStr[0].charAt(0))) {
             return;
         }
         for(int i = 0; i < seedToSoilStr.length; i++) {
             try {
-                seedToSoilString[i] = BigInteger.valueOf(Long.parseLong(seedToSoilStr[i]));
+                seedToSoilString[i] = Integer.parseInt(seedToSoilStr[i]);
             } catch (NumberFormatException ignored) {
             }
         }
@@ -403,7 +408,7 @@ public class AoC5 {
         String[] seedsStr = str.split(" ");
         for(String seed: seedsStr) {
             try {
-                Long.parseLong(seed);
+                seeds.add(Integer.parseInt(seed));
             } catch (NumberFormatException ignored) {
             }
         }
