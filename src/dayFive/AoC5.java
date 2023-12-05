@@ -232,7 +232,7 @@ public class AoC5 {
                     row = 0;
                     continue;
                 }
-                parseSeedsToSoil(str, String.valueOf(row));
+                parseSeedsToSoil(str);
                 row++;
             }
             if (str.contains("soil-to-fertilizer") || soilToFertilizer) {
@@ -242,7 +242,7 @@ public class AoC5 {
                     row = 0;
                     continue;
                 }
-                parseSoilToFertilizer(str, String.valueOf(row));
+                parseSoilToFertilizer(str);
                 row++;
             }
             if (str.contains("fertilizer-to-water") || fertilizerToWater) {
@@ -252,7 +252,7 @@ public class AoC5 {
                     row = 0;
                     continue;
                 }
-                parseFertilizerToWater(str, String.valueOf(row));
+                parseFertilizerToWater(str);
                 row++;
             }
             if (str.contains("water-to-light") || waterToLight) {
@@ -262,7 +262,7 @@ public class AoC5 {
                     row = 0;
                     continue;
                 }
-                parseWaterToLight(str, String.valueOf(row));
+                parseWaterToLight(str);
                 row++;
             }
             if (str.contains("light-to-temperature") || lightToTemperature) {
@@ -272,7 +272,7 @@ public class AoC5 {
                     row = 0;
                     continue;
                 }
-                parseLightToTemperature(str, String.valueOf(row));
+                parseLightToTemperature(str);
                 row++;
             }
             if (str.contains("temperature-to-humidity") || temperatureToHumidity) {
@@ -282,7 +282,7 @@ public class AoC5 {
                     row = 0;
                     continue;
                 }
-                parseTemperatureToHumidity(str, String.valueOf(row));
+                parseTemperatureToHumidity(str);
                 row++;
             }
             if (str.contains("humidity-to-location") || humidityToLocation) {
@@ -292,13 +292,13 @@ public class AoC5 {
                     row = 0;
                     continue;
                 }
-                parseHumidityToLocation(str, row);
+                parseHumidityToLocation(str);
                 row++;
             }
         }
     }
 
-    public static void parseHumidityToLocation(String str, int row) {
+    public static void parseHumidityToLocation(String str) {
         String[] humidityToLocationStr = str.split(" ");
         int[] humidityToLocationString = new int[3];
         if(!Character.isDigit(humidityToLocationStr[0].charAt(0))) {
@@ -313,7 +313,7 @@ public class AoC5 {
         humidityToLocation.add(humidityToLocationString);
     }
 
-    public static void parseTemperatureToHumidity(String str, String row) {
+    public static void parseTemperatureToHumidity(String str) {
         String[] temperatureToHumidityStr = str.split(" ");
         int[] temperatureToHumidityString = new int[3];
         if(!Character.isDigit(temperatureToHumidityStr[0].charAt(0))) {
@@ -328,7 +328,7 @@ public class AoC5 {
         temperatureToHumidity.add(temperatureToHumidityString);
     }
 
-    public static void parseLightToTemperature(String str, String row) {
+    public static void parseLightToTemperature(String str) {
         String[] lightToTemperatureStr = str.split(" ");
         int[] lightToTemperatureString = new int[3];
         if(!Character.isDigit(lightToTemperatureStr[0].charAt(0))) {
@@ -343,7 +343,7 @@ public class AoC5 {
         lightToTemperature.add(lightToTemperatureString);
     }
 
-    public static void parseWaterToLight(String str, String row) {
+    public static void parseWaterToLight(String str) {
         String[] waterToLightStr = str.split(" ");
         int[] waterToLightString = new int[3];
         if(!Character.isDigit(waterToLightStr[0].charAt(0))) {
@@ -358,7 +358,7 @@ public class AoC5 {
         waterToLight.add(waterToLightString);
     }
 
-    public static void parseFertilizerToWater(String str, String row) {
+    public static void parseFertilizerToWater(String str) {
         String[] fertilizerToWaterStr = str.split(" ");
         int[] fertilizerToWaterString = new int[3];
         if(!Character.isDigit(fertilizerToWaterStr[0].charAt(0))) {
@@ -373,7 +373,7 @@ public class AoC5 {
         fertilizerToWater.add(fertilizerToWaterString);
     }
 
-    public static void parseSoilToFertilizer(String str, String row) {
+    public static void parseSoilToFertilizer(String str) {
         String[] soilToFertilizerStr = str.split(" ");
         int[] soilToFertilizerString = new int[3];
         if(!Character.isDigit(soilToFertilizerStr[0].charAt(0))) {
@@ -388,7 +388,7 @@ public class AoC5 {
         soilToFertilizer.add(soilToFertilizerString);
     }
 
-    public static void parseSeedsToSoil(String str, String row) {
+    public static void parseSeedsToSoil(String str) {
         String[] seedToSoilStr = str.split(" ");
         int[] seedToSoilString = new int[3];
         if(!Character.isDigit(seedToSoilStr[0].charAt(0))) {
