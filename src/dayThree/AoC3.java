@@ -55,7 +55,6 @@ public class AoC3 {
         }
 
         if(adjacentPartNumbers.size() == 2) {
-            System.out.println(adjacentPartNumbers);
             return product;
         }
         return 0;
