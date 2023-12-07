@@ -3,16 +3,14 @@ package dayFive;
 
 import java.math.BigInteger;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
+import Utils.Reader;
 
 public class AoC5 {
     public static List<List<BigInteger[]>> mappings = new ArrayList<>();
     public static List<BigInteger> seeds = new ArrayList<>();
 
     public static void main(String[] args) {
-        List<String> lines = Reader.readFromFile();
+        List<String> lines = Reader.readFromFile("src/dayFive/Day5Input.txt");
         assert lines != null;
 
         makeMappings(lines);

@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import Utils.Reader;
 public class AoC6 {
     public static List<Long> times = new ArrayList<>();
     public static List<Long> distances = new ArrayList<>();
 
     public static void main(String[] args) {
-        List<String> lineList = Reader.readFromFile();
+        List<String> lineList = Reader.readFromFile("src/daySix/Day6Input.txt");
         assert lineList != null;
 
         parseFile(lineList);

@@ -1,4 +1,4 @@
-package daySix;
+package Utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Reader {
-    public static List<String> readFromFile() {
+    public static List<String> readFromFile(String fileName) {
         List<String> calibrations = new ArrayList<>();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("src/daySix/Day6Input.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line;
             while ((line = reader.readLine()) != null) {
                 calibrations.add(line);
@@ -18,8 +18,7 @@ public class Reader {
             reader.close();
             return calibrations;
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         }
     }
 }
