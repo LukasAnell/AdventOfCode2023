@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.stream.Stream;
+import Utils.Reader;
 
 public class AoC1 {
     public static int sum = 0;
@@ -22,11 +23,15 @@ public class AoC1 {
         dict.put("eight", 8);
         dict.put("nine", 9);
 
-        Path path = Paths.get("src/dayOne/Day1Input.txt");
-        try (Stream<String> lines = Files.lines(path)) {
-            lines.forEachOrdered(AoC1::findRealFirstLastNums);
-        } catch (IOException e) {
-            //error happened
+        List<String> lines = Reader.readFromFile("src/dayOne/Day1Input.txt");
+
+        for(String line: lines) {
+            findRealFirstLastNums(line);
+        }
+        System.out.println(sum);
+        sum = 0;
+        for(String line: lines) {
+            findFirstLastNums(line);
         }
         System.out.println(sum);
     }
