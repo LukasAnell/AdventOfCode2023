@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
+import Utils.Reader;
 
 public class AoC2 {
     public static int idSum = 0;
@@ -14,12 +15,18 @@ public class AoC2 {
     public static ArrayList<int[]> powerList = new ArrayList<>();
 
     public static void main(String[] args) {
+        List<String> lines = Reader.readFromFile("src/dayTwo/Day2Input.txt");
         Path path = Paths.get("src/dayTwo/Day2Input.txt");
         try (Stream<String> lines = Files.lines(path)) {
             lines.forEachOrdered(AoC2::isGamePossiblePartTwo);
         } catch (IOException e) {
             System.out.println("Error happened");
         }
+        for(String line: lines) {
+            isGamePossiblePartOne(line);
+        }
+
+        System.out.println(idSum);
 
         for(int[] arr: powerList) {
             int mult = 1;
@@ -57,7 +64,7 @@ public class AoC2 {
             }
         }
 
-        System.out.println("min reds: " + minReds + " min greens: " + minGreens + " min blues: " + minBlues);
+        // System.out.println("min reds: " + minReds + " min greens: " + minGreens + " min blues: " + minBlues);
 
         powerList.add(new int[]{minReds, minGreens, minBlues});
     }
