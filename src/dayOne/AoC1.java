@@ -11,19 +11,20 @@ import Utils.Reader;
 
 public class AoC1 {
     public static int sum = 0;
-    public static Dictionary<String, Integer> dict = new Hashtable<>();
+    public static Dictionary<String, Integer> dict = new Hashtable<>() {{
+        put("one", 1);
+        put("two", 2);
+        put("three", 3);
+        put("four", 4);
+        put("five", 5);
+        put("six", 6);
+        put("seven", 7);
+        put("eight", 8);
+        put("nine", 9);
+    }};
     public static void main(String[] args) {
-        dict.put("one", 1);
-        dict.put("two", 2);
-        dict.put("three", 3);
-        dict.put("four", 4);
-        dict.put("five", 5);
-        dict.put("six", 6);
-        dict.put("seven", 7);
-        dict.put("eight", 8);
-        dict.put("nine", 9);
-
         List<String> lines = Reader.readFromFile("src/dayOne/Day1Input.txt");
+        assert lineList != null;
 
         for(String line: lines) {
             findRealFirstLastNums(line);
