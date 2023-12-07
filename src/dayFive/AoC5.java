@@ -1,13 +1,11 @@
 package dayFive;
 
 
-import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 
 public class AoC5 {
     public static List<List<BigInteger[]>> mappings = new ArrayList<>();
@@ -16,18 +14,43 @@ public class AoC5 {
     public static void main(String[] args) {
         List<String> lines = Reader.readFromFile();
         assert lines != null;
-        partOne(lines);
+
+        makeMappings(lines);
+        partOne();
+        // 174137457 answer
 
         System.out.println();
 
-        partTwo(lines);
+        partTwo();
+        // 258258278 too high
     }
 
-    public static void partTwo(List<String> lines) {
+    public static void partTwo() {
 
     }
 
-    public static void partOne(List<String> lines) {
+    public static void partOne() {
+        BigInteger minLocation = new BigInteger(String.valueOf(Integer.MAX_VALUE));
+        for (BigInteger seed: seeds) {
+            BigInteger location = seed;
+            for (List<BigInteger[]> map: mappings) {
+                for (BigInteger[] mapping: map) {
+                    BigInteger destinationStart = mapping[0];
+                    BigInteger sourceStart = mapping[1];
+                    BigInteger length = mapping[2];
+                    if (location.compareTo(sourceStart) >= 0 && location.compareTo(sourceStart.add(length)) < 0) {
+                        location = destinationStart.add(location.subtract(sourceStart));
+                        break;
+                    }
+                }
+            }
+            minLocation = minLocation.min(location);
+        }
+
+        System.out.println(minLocation);
+    }
+
+    public static void makeMappings(List<String> lines) {
         for(int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             if (line.startsWith("seeds:")) {
@@ -49,24 +72,5 @@ public class AoC5 {
                 mappings.add(map);
             }
         }
-
-        BigInteger minLocation = new BigInteger(String.valueOf(Integer.MAX_VALUE));
-        for (BigInteger seed: seeds) {
-            BigInteger location = seed;
-            for (List<BigInteger[]> map: mappings) {
-                for (BigInteger[] mapping: map) {
-                    BigInteger destinationStart = mapping[0];
-                    BigInteger sourceStart = mapping[1];
-                    BigInteger length = mapping[2];
-                    if (location.compareTo(sourceStart) >= 0 && location.compareTo(sourceStart.add(length)) < 0) {
-                        location = destinationStart.add(location.subtract(sourceStart));
-                        break;
-                    }
-                }
-            }
-            minLocation = minLocation.min(location);
-        }
-
-        System.out.println(minLocation);
     }
 }
