@@ -81,11 +81,10 @@ public class AoC7 {
     }
 
     public static int findHandType(String hand) {
-        Map<Character, Integer> frequency =
-                hand.chars()
-                .mapToObj(c -> (char) c)
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(c -> 1)));
+        Map<Character, Integer> frequency = hand.chars()
+            .mapToObj(i -> (char) i)
+            .collect(HashMap::new, (m, k) -> m.merge(k, 1, Integer::sum), Map::putAll);
 
-        return Collections.max(frequency.entrySet(), Map.Entry.comparingByValue()).getValue();
+        return Collections.max(frequency.values());
     }
 }
