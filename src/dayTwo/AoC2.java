@@ -16,6 +16,7 @@ public class AoC2 {
 
     public static void main(String[] args) {
         List<String> lines = Reader.readFromFile("src/dayTwo/Day2Input.txt");
+        assert lineList != null;
         Path path = Paths.get("src/dayTwo/Day2Input.txt");
         try (Stream<String> lines = Files.lines(path)) {
             lines.forEachOrdered(AoC2::isGamePossiblePartTwo);
