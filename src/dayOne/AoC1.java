@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.stream.Stream;
 import Utils.Reader;
 
@@ -24,7 +25,7 @@ public class AoC1 {
     }};
     public static void main(String[] args) {
         List<String> lines = Reader.readFromFile("src/dayOne/Day1Input.txt");
-        assert lineList != null;
+        assert lines != null;
 
         for(String line: lines) {
             findRealFirstLastNums(line);

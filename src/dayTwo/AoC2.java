@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 import Utils.Reader;
 
@@ -16,15 +17,11 @@ public class AoC2 {
 
     public static void main(String[] args) {
         List<String> lines = Reader.readFromFile("src/dayTwo/Day2Input.txt");
-        assert lineList != null;
-        Path path = Paths.get("src/dayTwo/Day2Input.txt");
-        try (Stream<String> lines = Files.lines(path)) {
-            lines.forEachOrdered(AoC2::isGamePossiblePartTwo);
-        } catch (IOException e) {
-            System.out.println("Error happened");
-        }
+        assert lines != null;
+
         for(String line: lines) {
             isGamePossiblePartOne(line);
+            isGamePossiblePartTwo(line);
         }
 
         System.out.println(idSum);

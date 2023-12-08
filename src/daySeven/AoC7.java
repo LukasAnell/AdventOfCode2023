@@ -2,13 +2,11 @@ package daySeven;
 
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import Utils.Reader;
 
 public class AoC7 {
-    public static Map<String, Integer> handMap = new HashMap<>() {{
+    public static Map<String, Integer> partOneHandMap = new HashMap<>() {{
         put("A", 14);
         put("K", 13);
         put("Q", 12);
@@ -23,13 +21,29 @@ public class AoC7 {
         put("3", 3);
         put("2", 2);
     }};
+
+    public static Map<String, Integer> partTwoHandMap = new HashMap<>() {{
+        put("A", 14);
+        put("K", 13);
+        put("Q", 12);
+        put("T", 10);
+        put("9", 9);
+        put("8", 8);
+        put("7", 7);
+        put("6", 6);
+        put("5", 5);
+        put("4", 4);
+        put("3", 3);
+        put("2", 2);
+        put("J", 1);
+    }};
+
     public static void main(String[] args) {
         List<String> lines = Reader.readFromFile("src/daySeven/Day7Input.txt");
         assert lines != null;
 
         partOne(lines);
-        // 251290417 too low
-        // 253341391 too high
+        // 252656917 answer
     }
 
     public static void partOne(List<String> lines) {
@@ -43,15 +57,12 @@ public class AoC7 {
             handList.add(hand);
         }
 
-        for(int i = 0; i < handList.size(); i++) {
-            handList.sort(Comparator.comparingInt(AoC7::findHandType));
-        }
+        handList.sort(Comparator.comparingInt(AoC7::findHandType));
         for(int i = 0; i < handList.size() / 2; i++) {
             sortHandsByCards(handList);
         }
 
         int sum = 0;
-        System.out.println(handList);
         for(int i = 0; i < handList.size(); i++) {
             String hand = handList.get(i);
             sum += handToBidMap.get(hand) * (i + 1);
@@ -66,8 +77,8 @@ public class AoC7 {
             if(findHandType(hand1) == findHandType(hand2)) {
                 for(int j = 0; j < hand1.length(); j++) {
                     if(hand1.charAt(j) != hand2.charAt(j)) {
-                        int hand1Card = handMap.get(hand1.substring(j, j + 1));
-                        int hand2Card = handMap.get(hand2.substring(j, j + 1));
+                        int hand1Card = partOneHandMap.get(Character.toString(hand1.charAt(j)));
+                        int hand2Card = partOneHandMap.get(Character.toString(hand2.charAt(j)));
 
                         if(hand1Card > hand2Card) {
                             handList.set(i + 1, hand1);
@@ -85,6 +96,27 @@ public class AoC7 {
             .mapToObj(i -> (char) i)
             .collect(HashMap::new, (m, k) -> m.merge(k, 1, Integer::sum), Map::putAll);
 
+        if(frequency.size() == 1 && frequency.containsValue(5)) {
+            return 7;
+        }
+        if(frequency.size() == 2 && frequency.containsValue(4)) {
+            return 6;
+        }
+        if(frequency.containsValue(3) && frequency.containsValue(2)) {
+            return 5;
+        }
+        if(frequency.size() == 3 && frequency.containsValue(3)) {
+            return 4;
+        }
+        if(frequency.size() == 3 && Collections.frequency(frequency.values(), 2) == 2) {
+            return 3;
+        }
+        if(frequency.size() == 4 && frequency.containsValue(2)) {
+            return 2;
+        }
+        if(frequency.size() == 5) {
+            return 1;
+        }
         return Collections.max(frequency.values());
     }
 }
