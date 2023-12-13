@@ -28,12 +28,12 @@ public class AoC1 {
         assert lines != null;
 
         for(String line: lines) {
-            findRealFirstLastNums(line);
+            findFirstLastNums(line);
         }
         System.out.println(sum);
         sum = 0;
         for(String line: lines) {
-            findFirstLastNums(line);
+            findRealFirstLastNums(line);
         }
         System.out.println(sum);
     }

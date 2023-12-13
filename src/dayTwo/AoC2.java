@@ -62,8 +62,6 @@ public class AoC2 {
             }
         }
 
-        // System.out.println("min reds: " + minReds + " min greens: " + minGreens + " min blues: " + minBlues);
-
         powerList.add(new int[]{minReds, minGreens, minBlues});
     }
 
@@ -81,9 +79,6 @@ public class AoC2 {
             commaList.addAll(Arrays.asList(s.split(",")));
         }
 
-        int reds = 0;
-        int greens = 0;
-        int blues = 0;
         boolean isPossible = true;
 
         for(String s: commaList) {

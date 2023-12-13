@@ -38,8 +38,8 @@ public class AoC5 {
         for(BigInteger[] range: seedRanges) {
             minSeed = minSeed.min(checkRangeBounds(range));
         }
-        System.out.println(minSeed);
-        System.out.println(seedRangeMap);
+        // System.out.println(minSeed);
+        // System.out.println(seedRangeMap);
 
         BigInteger minLocation = new BigInteger(String.valueOf(Integer.MAX_VALUE));
         BigInteger[] range = seedRangeMap.get(minSeed);
@@ -64,14 +64,15 @@ public class AoC5 {
 
     public static BigInteger checkRangeBounds(BigInteger[] range) {
         BigInteger minSeed = range[0];
+        BigInteger location = BigInteger.valueOf(Integer.MAX_VALUE);
         for(BigInteger seed : range) {
             for(List<BigInteger[]> map: mappings) {
                 for(BigInteger[] mapping: map) {
                     BigInteger destinationStart = mapping[0];
                     BigInteger sourceStart = mapping[1];
                     BigInteger length = mapping[2];
-                    if(seed.compareTo(sourceStart) >= 0 && seed.compareTo(sourceStart.add(length)) < 0) {
-                        seed = destinationStart.add(seed.subtract(sourceStart));
+                    if (seed.compareTo(sourceStart) >= 0 && seed.compareTo(sourceStart.add(length)) < 0) {
+                        location = destinationStart.add(seed.subtract(sourceStart));
                         break;
                     }
                 }

@@ -9,41 +9,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
+import Utils.Reader;
 
 public class AoC4 {
-    public static List<String> input = new ArrayList<>();
     public static List<Integer> cardAmounts = new ArrayList<>();
     public static int numScratchCards = 0;
     public static int sum = 0;
 
     public static void main(String[] args) {
-        Path path = Paths.get("src/dayFour/Day4Input.txt");
-        try (Stream<String> lines = Files.lines(path)) {
-            lines.forEachOrdered(AoC4::partOne);
-        } catch (IOException e) {
-            System.out.println("Error happened");
-            throw new RuntimeException(e);
-        }
-        path = Paths.get("src/dayFour/Day4Input.txt");
-        try (Stream<String> lines = Files.lines(path)) {
-            lines.forEachOrdered(AoC4::processLines);
-        } catch (IOException e) {
-            System.out.println("Error happened");
-            throw new RuntimeException(e);
+        List<String> lines = Reader.readFromFile("src/dayFour/Day4Input.txt");
+        assert lines != null;
+
+        for(String line: lines) {
+            partOne(line);
         }
 
         System.out.println(sum);
+        // 26346
 
-        partTwo();
+        partTwo(lines);
         System.out.println(numScratchCards);
-        // 8467762 answer!
+        // 8467762
     }
 
-    public static void processLines(String str) {
-        input.add(str);
-    }
-
-    public static void partTwo() {
+    public static void partTwo(List<String> input) {
         for(int i = 0; i < input.size(); i++) {
             cardAmounts.add(1);
         }
