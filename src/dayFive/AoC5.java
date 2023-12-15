@@ -36,6 +36,7 @@ public class AoC5 {
 
         BigInteger minSeed = BigInteger.valueOf(Integer.MAX_VALUE);
         for(BigInteger[] range: seedRanges) {
+            System.out.println(Arrays.toString(range));
             minSeed = minSeed.min(checkRangeBounds(range));
         }
         // System.out.println(minSeed);
@@ -46,26 +47,7 @@ public class AoC5 {
         System.out.println(Arrays.toString(range));
         for(BigInteger i = range[0]; i.compareTo(range[1]) <= 0; i = i.add(BigInteger.ONE)) {
             BigInteger seed = i;
-            for(List<BigInteger[]> map: mappings) {
-                for(BigInteger[] mapping: map) {
-                    BigInteger destinationStart = mapping[0];
-                    BigInteger sourceStart = mapping[1];
-                    BigInteger length = mapping[2];
-                    if (seed.compareTo(sourceStart) >= 0 && seed.compareTo(sourceStart.add(length)) < 0) {
-                        seed = destinationStart.add(seed.subtract(sourceStart));
-                        break;
-                    }
-                }
-            }
-            minLocation = minLocation.min(seed);
-        }
-        System.out.println(minLocation);
-    }
-
-    public static BigInteger checkRangeBounds(BigInteger[] range) {
-        BigInteger minSeed = range[0];
-        BigInteger location = BigInteger.valueOf(Integer.MAX_VALUE);
-        for(BigInteger seed : range) {
+            BigInteger location = seed;
             for(List<BigInteger[]> map: mappings) {
                 for(BigInteger[] mapping: map) {
                     BigInteger destinationStart = mapping[0];
@@ -77,9 +59,31 @@ public class AoC5 {
                     }
                 }
             }
-            minSeed = minSeed.min(seed);
+            minLocation = minLocation.min(location);
         }
-        return minSeed;
+        System.out.println(minLocation);
+    }
+
+    public static BigInteger checkRangeBounds(BigInteger[] range) {
+        Map<BigInteger, BigInteger> locToSeed = new HashMap<>();
+        BigInteger minLocation = BigInteger.valueOf(Integer.MAX_VALUE);
+        for(BigInteger seed: range) {
+            BigInteger location = seed;
+            for(List<BigInteger[]> map: mappings) {
+                for(BigInteger[] mapping: map) {
+                    BigInteger destinationStart = mapping[0];
+                    BigInteger sourceStart = mapping[1];
+                    BigInteger length = mapping[2];
+                    if (seed.compareTo(sourceStart) >= 0 && seed.compareTo(sourceStart.add(length)) < 0) {
+                        location = destinationStart.add(seed.subtract(sourceStart));
+                        locToSeed.put(location, seed);
+                        break;
+                    }
+                }
+            }
+            minLocation = minLocation.min(location);
+        }
+        return locToSeed.get(minLocation);
     }
 
     public static void partOne() {

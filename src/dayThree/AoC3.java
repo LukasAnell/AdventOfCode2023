@@ -24,7 +24,7 @@ public class AoC3 {
             }
         }
         System.out.println(sum);
-        // 81997870 ANSWER
+        // 81997870 answer
     }
 
     public static int checkAroundPartTwo(char[][] list, int x, int y) {
@@ -106,6 +106,7 @@ public class AoC3 {
             sum += Integer.parseInt(s);
         }
         System.out.println(sum);
+        // 550934 answer
     }
 
     public static boolean checkAround(char[][] list, int x, int y) {
@@ -113,7 +114,7 @@ public class AoC3 {
             if ((x + dx >= 0) && (x + dx < list.length)) {
                 for(int dy = -1; dy <= 1; dy++) {
                     if ((y + dy >= 0) && (y + dy < list[x + dx].length) && (!(dx == 0 && dy == 0))) {
-                        if (Character.toString(list[x + dx][y + dy]).matches("[^a-zA-Z0-9.]")) {
+                        if (Character.toString(list[x + dx][y + dy]).matches("[^0-9.]")) {
                             return true;
                         }
                     }
