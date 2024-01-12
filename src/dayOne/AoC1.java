@@ -5,7 +5,6 @@ import java.util.*;
 import Utils.Reader;
 
 public class AoC1 {
-    public static int sum = 0;
     public static Map<String, Integer> numStringToInt = new HashMap<>() {{
         put("one", 1);
         put("two", 2);
@@ -22,9 +21,16 @@ public class AoC1 {
         assert lines != null;
 
         partOne(lines);
+        partTwo(lines);
+    }
 
-        for (String line: lines) {
-            findRealFirstLastNums(line);
+    public static void partTwo(List<String> lines) {
+        int sum = 0;
+        for(String line: lines) {
+            for(String num: numStringToInt.keySet()) {
+                line = line.replace(num, num.substring(0, num.length() / 2) + numStringToInt.get(num) + num.substring(num.length() / 2 + 1));
+            }
+            sum += findFirstLastNums(line);
         }
         System.out.println(sum);
     }
@@ -32,121 +38,15 @@ public class AoC1 {
     public static void partOne(List<String> lines) {
         int sum = 0;
         for(String line: lines) {
-            String[] nums = Arrays.stream(line.split(""))
-                    .filter(s -> s.matches("[0-9]"))
-                    .toArray(String[]::new);
-            sum += Integer.parseInt(nums[0] + nums[nums.length - 1]);
+            sum += findFirstLastNums(line);
         }
         System.out.println(sum);
     }
 
-    public static void findRealFirstLastNums(String str) {
-        String number = "";
-        for(int i = 0; i < str.length(); i++) {
-            if(str.startsWith("one", i)) {
-                number += numStringToInt.get(str.substring(i, i + 3));
-                break;
-            }
-            if(str.startsWith("two", i)) {
-                number += numStringToInt.get(str.substring(i, i + 3));
-                break;
-            }
-            if(str.startsWith("three", i)) {
-                number += numStringToInt.get(str.substring(i, i + 5));
-                break;
-            }
-            if(str.startsWith("four", i)) {
-                number += numStringToInt.get(str.substring(i, i + 4));
-                break;
-            }
-            if(str.startsWith("five", i)) {
-                number += numStringToInt.get(str.substring(i, i + 4));
-                break;
-            }
-            if(str.startsWith("six", i)) {
-                number += numStringToInt.get(str.substring(i, i + 3));
-                break;
-            }
-            if(str.startsWith("seven", i)) {
-                number += numStringToInt.get(str.substring(i, i + 5));
-                break;
-            }
-            if(str.startsWith("eight", i)) {
-                number += numStringToInt.get(str.substring(i, i + 5));
-                break;
-            }
-            if(str.startsWith("nine", i)) {
-                number += numStringToInt.get(str.substring(i, i + 4));
-                break;
-            }
-
-            if(Character.isDigit(str.charAt(i))) {
-                number += Character.getNumericValue(str.charAt(i));
-                break;
-            }
-        }
-
-        for(int i = str.length() - 1; i >= 0; i--) {
-            if(str.startsWith("one", i)) {
-                number += numStringToInt.get(str.substring(i, i + 3));
-                break;
-            }
-            if(str.startsWith("two", i)) {
-                number += numStringToInt.get(str.substring(i, i + 3));
-                break;
-            }
-            if(str.startsWith("three", i)) {
-                number += numStringToInt.get(str.substring(i, i + 5));
-                break;
-            }
-            if(str.startsWith("four", i)) {
-                number += numStringToInt.get(str.substring(i, i + 4));
-                break;
-            }
-            if(str.startsWith("five", i)) {
-                number += numStringToInt.get(str.substring(i, i + 4));
-                break;
-            }
-            if(str.startsWith("six", i)) {
-                number += numStringToInt.get(str.substring(i, i + 3));
-                break;
-            }
-            if(str.startsWith("seven", i)) {
-                number += numStringToInt.get(str.substring(i, i + 5));
-                break;
-            }
-            if(str.startsWith("eight", i)) {
-                number += numStringToInt.get(str.substring(i, i + 5));
-                break;
-            }
-            if(str.startsWith("nine", i)) {
-                number += numStringToInt.get(str.substring(i, i + 4));
-                break;
-            }
-
-            if(Character.isDigit(str.charAt(i))) {
-                number += Character.getNumericValue(str.charAt(i));
-                break;
-            }
-        }
-        sum += Integer.parseInt(number);
-    }
-
-    public static void findFirstLastNums(String str) {
-        String number = "";
-        for(int i = 0; i < str.length(); i++) {
-            if(Character.isDigit(str.charAt(i))) {
-                number += Character.getNumericValue(str.charAt(i));
-                break;
-            }
-        }
-
-        for(int i = str.length() - 1; i >= 0; i--) {
-            if(Character.isDigit(str.charAt(i))) {
-                number += Character.getNumericValue(str.charAt(i));
-                break;
-            }
-        }
-        sum += Integer.parseInt(number);
+    public static int findFirstLastNums(String line) {
+        String[] nums = Arrays.stream(line.split(""))
+                .filter(s -> s.matches("[0-9]"))
+                .toArray(String[]::new);
+        return Integer.parseInt(nums[0] + nums[nums.length - 1]);
     }
 }
