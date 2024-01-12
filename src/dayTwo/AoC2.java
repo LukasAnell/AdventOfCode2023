@@ -3,7 +3,10 @@ package dayTwo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
+
 import Utils.Reader;
 
 public class AoC2 {
@@ -15,85 +18,74 @@ public class AoC2 {
         List<String> lines = Reader.readFromFile("src/dayTwo/Day2Input.txt");
         assert lines != null;
 
+        partOne(lines);
+        partTwo(lines);
+    }
+
+    public static void partOne(List<String> lines) {
+        int sum = 0;
         for(String line: lines) {
-            isGamePossiblePartOne(line);
-            isGamePossiblePartTwo(line);
-        }
+            int Id = Integer.parseInt(line.split(":")[0].split(" ")[1]);
+            List<List<String[]>> games = Collections.singletonList(Stream.of(line.split(":")[1].split(";")).map(s -> s.stripLeading().split(", ")).toList());
 
-        System.out.println(idSum);
+            int maxRed = 12;
+            int maxGreen = 13;
+            int maxBlue = 14;
 
-        for(int[] arr: powerList) {
-            int mult = 1;
-            for(int i: arr) {
-                mult *= i;
+            for(List<String[]> game: games) {
+                int red = 0;
+                int green = 0;
+                int blue = 0;
+                for(String[] set: game) {
+                    for(String cubes: set) {
+                        String color = cubes.substring(cubes.indexOf(cubes.split(" ")[1]));
+                        int amount = Integer.parseInt(cubes.split(" ")[0]);
+                        switch(color) {
+                            case "red":
+                                red = Math.max(red, amount);
+                            case "green":
+                                green = Math.max(green, amount);
+                            case "blue":
+                                blue = Math.max(blue, amount);
+                        }
+                    }
+                }
+                if(red <= maxRed && green <= maxGreen && blue <= maxBlue) {
+                    sum += Id;
+                }
             }
-            sumofPowers += mult;
         }
-
-        System.out.println(sumofPowers);
+        System.out.println(sum);
     }
 
-    public static void isGamePossiblePartTwo(String str) {
-        ArrayList<String> list = new ArrayList<>(Arrays.asList(str.split(":")));
-
-        ArrayList<String> semicolonList = new ArrayList<>(Arrays.asList(list.get(1).split(";")));
-
-        int minReds = Integer.MIN_VALUE;
-        int minGreens = Integer.MIN_VALUE;
-        int minBlues = Integer.MIN_VALUE;
-
-        for(String s: semicolonList) {
-            ArrayList<String> commaList = new ArrayList<>(Arrays.asList(s.split(",")));
-            commaList.replaceAll(str1 -> str1.replaceAll("\\s+", ""));
-            for(String s1: commaList) {
-                if(s1.contains("red")) {
-                    minReds = Math.max(minReds, Integer.parseInt(s1.substring(0, s1.indexOf("red"))));
+    public static void partTwo(List<String> lines) {
+        int sum = 0;
+        for(String line: lines) {
+            List<List<String[]>> sets = Collections.singletonList(Stream.of(line.split(":")[1].split(";")).map(s -> s.stripLeading().split(", ")).toList());
+            int red = 1;
+            int green = 1;
+            int blue = 1;
+            for(List<String[]> element: sets) {
+                for(String[] amountAndColor: element) {
+                    for(String cubes: amountAndColor) {
+                        String color = cubes.substring(cubes.indexOf(cubes.split(" ")[1]));
+                        int amount = Integer.parseInt(cubes.split(" ")[0]);
+                        switch(color) {
+                            case "red":
+                                red = Math.max(red, amount);
+                                break;
+                            case "green":
+                                green = Math.max(green, amount);
+                                break;
+                            case "blue":
+                                blue = Math.max(blue, amount);
+                                break;
+                        }
+                    }
                 }
-                if(s1.contains("green")) {
-                    minGreens = Math.max(minGreens, Integer.parseInt(s1.substring(0, s1.indexOf("green"))));
-                }
-                if(s1.contains("blue")) {
-                    minBlues = Math.max(minBlues, Integer.parseInt(s1.substring(0, s1.indexOf("blue"))));
-                }
             }
+            sum += red * green * blue;
         }
-
-        powerList.add(new int[]{minReds, minGreens, minBlues});
-    }
-
-    // 12 red cubes, 13 green cubes, 14 blue cubes
-    public static void isGamePossiblePartOne(String str) {
-        int gameId;
-
-        ArrayList<String> list = new ArrayList<>(Arrays.asList(str.split(":")));
-
-        gameId = Integer.parseInt(list.get(0).substring(5));
-
-        ArrayList<String> semicolonList = new ArrayList<>(Arrays.asList(list.get(1).split(";")));
-        ArrayList<String> commaList = new ArrayList<>();
-        for(String s : semicolonList) {
-            commaList.addAll(Arrays.asList(s.split(",")));
-        }
-
-        boolean isPossible = true;
-
-        for(String s: commaList) {
-            if(s.contains("red") && Integer.parseInt(s.substring(1, s.indexOf("red") - 1)) > 12) {
-                isPossible = false;
-                break;
-            }
-            if(s.contains("green") && Integer.parseInt(s.substring(1, s.indexOf("green") - 1)) > 13) {
-                isPossible = false;
-                break;
-            }
-            if(s.contains("blue") && Integer.parseInt(s.substring(1, s.indexOf("blue") - 1)) > 14) {
-                isPossible = false;
-                break;
-            }
-        }
-
-        if(isPossible) {
-            idSum += gameId;
-        }
+        System.out.println(sum);
     }
 }
