@@ -17,7 +17,7 @@ public class AoC4 {
     public static int sum = 0;
 
     public static void main(String[] args) {
-        List<String> lines = Reader.readFromFile("src/dayFour/Day4Input.txt");
+        List<String> lines = Reader.readFromFile("src/Inputs/Day4Input.txt");
         assert lines != null;
 
         for(String line: lines) {

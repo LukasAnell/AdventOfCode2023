@@ -7,7 +7,7 @@ import Utils.Reader;
 public class AoC3 {
     public static List<String> result = new ArrayList<>();
     public static void main(String[] args) {
-        List<String> lineList = Reader.readFromFile("src/dayThree/Day3Input.txt");
+        List<String> lineList = Reader.readFromFile("src/Inputs/Day3Input.txt");
         assert lineList != null;
         char[][] array2D = create2DArray(lineList);
         partOne(array2D, lineList.get(0).length(), lineList.size());

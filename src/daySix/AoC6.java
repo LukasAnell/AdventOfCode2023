@@ -11,7 +11,7 @@ public class AoC6 {
     public static List<Long> distances = new ArrayList<>();
 
     public static void main(String[] args) {
-        List<String> lineList = Reader.readFromFile("src/daySix/Day6Input.txt");
+        List<String> lineList = Reader.readFromFile("src/Inputs/Day6Input.txt");
         assert lineList != null;
 
         parseFile(lineList);

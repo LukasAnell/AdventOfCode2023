@@ -6,7 +6,7 @@ import java.util.*;
 
 public class AoC8 {
     public static void main(String[] args) {
-        List<String> lines = Reader.readFromFile("src/dayEight/Day8TestInputPart2.txt");
+        List<String> lines = Reader.readFromFile("src/Inputs/Day8TestInputPart2.txt");
         assert lines != null;
 
         // partOne(lines);

@@ -24,7 +24,7 @@ public class AoC7 {
         put("2", 2);
     }};
     public static void main(String[] args) {
-        List<String> lines = Reader.readFromFile("src/daySeven/Day7Input.txt");
+        List<String> lines = Reader.readFromFile("src/Inputs/Day7Input.txt");
         assert lines != null;
 
         partOne(lines);

@@ -15,7 +15,7 @@ public class AoC2 {
     public static ArrayList<int[]> powerList = new ArrayList<>();
 
     public static void main(String[] args) {
-        List<String> lines = Reader.readFromFile("src/dayTwo/Day2Input.txt");
+        List<String> lines = Reader.readFromFile("src/Inputs/Day2Input.txt");
         assert lines != null;
 
         partOne(lines);
